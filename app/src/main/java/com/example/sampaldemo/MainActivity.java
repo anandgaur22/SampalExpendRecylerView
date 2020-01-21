@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CommentryListAdapter adapter;
     JSONArray jsonArray3;
+    JSONObject jsonObject3;
     private List<CommentryListModel> listModel = new ArrayList<>();
     private List<BallsListModel> ballsListModels = new ArrayList<>();
 
@@ -107,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject2 = jsonArray.getJSONObject(i);
 
-                            CommentryListModel model = new CommentryListModel();
-
                             String innings_id = jsonObject2.getString("id");
                             String name = jsonObject2.getString("name");
                             String shortName = jsonObject2.getString("shortName");
@@ -119,14 +118,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                             for (int j = 0; j < jsonArray2.length(); j++) {
-                                JSONObject jsonObject3 = jsonArray2.getJSONObject(j);
+                                jsonObject3 = jsonArray2.getJSONObject(j);
 
+                                CommentryListModel model = new CommentryListModel();
 
                                 String overs_id = jsonObject3.getString("id");
                                 String uniqueOverId = jsonObject3.getString("uniqueOverId");
                                 String number = jsonObject3.getString("number");
 
-                                if (jsonObject3.has("overSummary")){
+                                if (jsonObject3.has("overSummary")) {
 
                                     JSONObject jsonObject4 = jsonObject3.getJSONObject("overSummary");
                                     String bowlersId = jsonObject4.getString("bowlersId");
@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                                     model.setWicketsTakeninOver(wicketsTakeninOver);
                                 }
 
-
                                 model.setId(innings_id);
                                 model.setName(name);
                                 model.setShortName(shortName);
@@ -159,24 +158,33 @@ public class MainActivity extends AppCompatActivity {
 
                                 jsonArray3 = jsonObject3.getJSONArray("balls");
 
+                                Log.d("", "jsonArray3.length: "+jsonArray3.length());
+
 
                             }
 
 
                             for (int k = 0; k < jsonArray3.length(); k++) {
+
                                 JSONObject jsonObject5 = jsonArray3.getJSONObject(k);
 
-                                BallsListModel model2=new BallsListModel();
+                                BallsListModel model2 = new BallsListModel();
 
-                                String ballNumber = jsonObject5.getString("ballNumber");
+                                String  ballNumber = jsonObject5.getString("ballNumber");
                                 String id = jsonObject5.getString("id");
                                 String result = jsonObject5.getString("result");
+
+                                Log.d("", "onResponseJ3: "+jsonArray3.toString());
+                                Log.d("", "onResponseJ5: "+jsonObject5.toString());
+
+                                Log.d("", "k.length: "+jsonArray3.length());
+
 
 
                                 JSONArray jsonArray4 = jsonObject5.getJSONArray("comments");
 
 
-                                //  for (int l = 0; l < jsonArray3.length(); l++) {
+                                //  for (int l = 0; l < jsonArray4.length(); l++) {
 
                                 JSONObject jsonObject6 = jsonArray4.getJSONObject(0);
 
@@ -187,10 +195,10 @@ public class MainActivity extends AppCompatActivity {
                                 isFallOfWicket = jsonObject6.getString("isFallOfWicket");
                                 // batsmanId = jsonObject6.getString("batsmanId");
                                 // batsmanName = jsonObject6.getString("batsmanName");
-                                //   batsmanImageURL = jsonObject6.getString("batsmanImageURL");
+                                // batsmanImageURL = jsonObject6.getString("batsmanImageURL");
                                 bowlerId = jsonObject6.getString("bowlerId");
                                 bowlerName = jsonObject6.getString("bowlerName");
-                                //  bowlerImageURL = jsonObject6.getString("bowlerImageURL");
+                                // bowlerImageURL = jsonObject6.getString("bowlerImageURL");
                                 runs = jsonObject6.getString("runs");
                                 battingTeamScore = jsonObject6.getString("battingTeamScore");
                                 offStrikeBatsmanId = jsonObject6.getString("offStrikeBatsmanId");
